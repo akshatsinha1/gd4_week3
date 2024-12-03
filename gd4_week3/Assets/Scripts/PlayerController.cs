@@ -16,13 +16,17 @@ public class PlayerController : MonoBehaviour
     {
         float horizontalMove = Input.GetAxis("Horizontal");
         float verticalMove = Input.GetAxis("Vertical");
-        Vector3 moveDir = new Vector3(horizontalMove, 0, verticalMove).normalized;
 
-        GetComponent<CharacterController>().Move(moveDir * moveSpeed * Time.deltaTime);
+        //METHOD 1
+        //transform.Translate(moveSpeed * horizontalMove * Time.deltaTime * Vector3.right);
+        //transform.Translate(moveSpeed * verticalMove * Time.deltaTime * Vector3.forward);
 
-       // transform.Translate(moveSpeed * horizontalMove * Time.deltaTime,0,0);
+        //METHOD 2
+        Vector3 moveDir = new Vector3(horizontalMove,0,verticalMove).normalized;
+        transform.Translate(moveDir * moveSpeed * Time.deltaTime);
 
-        if(transform.position.x < -xRange)
+
+        if (transform.position.x < -xRange)
         {
             transform.position = new Vector3(-xRange,0,transform.position.z);
         }
@@ -33,3 +37,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
+
+
+//Add forwards/Backwards Movement
+//Have bounds on the Z axis as well
