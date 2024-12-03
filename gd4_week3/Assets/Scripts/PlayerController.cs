@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 10f;
     public float xRange = 13.5f;
 
+    public GameObject projectile;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,8 +16,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontalMove = Input.GetAxis("Horizontal");
-        float verticalMove = Input.GetAxis("Vertical");
+        float horizontalMove = Input.GetAxisRaw("Horizontal");
+        float verticalMove = Input.GetAxisRaw("Vertical");
 
         //METHOD 1
         //transform.Translate(moveSpeed * horizontalMove * Time.deltaTime * Vector3.right);
@@ -35,9 +37,14 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(xRange, 0, transform.position.z);
         }
-    }
+
+
+        //spawning projectiles
+
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            Instantiate(projectile, transform.position + new Vector3(0, 0, 1), Quaternion.identity);
+        }
+        
+;    }
 }
-
-
-//Add forwards/Backwards Movement
-//Have bounds on the Z axis as well
