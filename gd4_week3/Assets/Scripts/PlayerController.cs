@@ -7,11 +7,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject projectile;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public int score;
 
     // Update is called once per frame
     void Update()
@@ -25,8 +21,9 @@ public class PlayerController : MonoBehaviour
 
         //METHOD 2
         Vector3 moveDir = new Vector3(horizontalMove,0,verticalMove).normalized;
-        transform.Translate(moveDir * moveSpeed * Time.deltaTime);
+        transform.Translate(moveDir * moveSpeed * Time.deltaTime, Space.World);
 
+        transform.rotation = Quaternion.LookRotation(moveDir);
 
         if (transform.position.x < -xRange)
         {
@@ -43,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.B))
         {
-            Instantiate(projectile, transform.position + new Vector3(0, 0, 1), Quaternion.identity);
+            Destroy(Instantiate(projectile, transform.position + transform.forward, transform.rotation),5);
         }
         
 ;    }
