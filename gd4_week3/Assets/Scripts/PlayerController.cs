@@ -1,4 +1,6 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public GameObject projectile;
 
     public int score;
+
+    public TMP_Text scoreText;
 
     // Update is called once per frame
     void Update()
@@ -41,7 +45,24 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.B))
         {
             Destroy(Instantiate(projectile, transform.position + transform.forward, transform.rotation),5);
+            
         }
-        
-;    }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Time.timeScale = 0;
+        }
+
+
+        //Update the score UI
+        scoreText.text = "Score: " + score;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Animal")
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+
 }

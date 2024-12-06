@@ -5,17 +5,19 @@ public class AnimalMovement : MonoBehaviour
     public float moveSpeed;
     public float xRange, zRange;
 
+    int animalCount;
+
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+        
 
         if (transform.position.x > xRange || transform.position.x < -xRange || transform.position.z > zRange || transform.position.z < -zRange)
         {
             //either of the four contitions need to be true for the code tobe executed
             Destroy(gameObject);
         }
-
+        animalCount = transform.childCount;
 
         if (transform.position.x > xRange && transform.position.x < -xRange)
         {
@@ -32,21 +34,28 @@ public class AnimalMovement : MonoBehaviour
 
             //Update the score
             GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().score++;
-            //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().score = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().score + 1;
-
-            //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().score += 1;
 
             Debug.Log(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().score);
 
-
             //Destroy ourselves
             Destroy(gameObject);
+        }
 
-           
+        if(other.tag == "animal")
+        {
+            other.transform.parent = transform;
+        }
 
-
+       
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        if(collision.transform.tag == "Ground")
+        {
+            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
         }
     }
 
-  
+
+
 }
